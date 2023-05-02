@@ -2,11 +2,11 @@ import React, { useEffect, useState } from 'react'
 import { Amplify, API, graphqlOperation } from 'aws-amplify'
 import { createTask, deleteTask } from './graphql/mutations'
 import { listTasks } from './graphql/queries'
-import { Authenticator, Button, Heading } from '@aws-amplify/ui-react';
+import { Button, Heading, Authenticator } from '@aws-amplify/ui-react';
 import '@aws-amplify/ui-react/styles.css';
 import awsExports from "./aws-exports";
 
-// import { AuthenticatorContainer } from './styles.js'
+import { AuthenticatorContainer } from './styles.js'
 
 Amplify.configure(awsExports);
 
@@ -57,9 +57,10 @@ const App = () => {
   }
 
   return (
-    <Authenticator hideSignUp={true}>
+    <AuthenticatorContainer hideSignUp={true}>
       {({ signOut, user}) => (
         <div style={styles.container}>
+          <Heading level={1}>Hello {user.username}</Heading>
           <Button onClick={signOut}>Sign out</Button>
           <h2>Amplify Tasks</h2>
           <input
@@ -76,9 +77,17 @@ const App = () => {
           />
           <button style={styles.button} onClick={addTodo}>Create Task</button>
           <button style={styles.button} onClick={borrarTodo}>Borrar Todas las Tasks</button>
+          {
+            tasks.map((task, index) => (
+              <div key={task.id ? task.id : index} style={styles.todo}>
+                <p style={styles.todoName}>{task.name}</p>
+                <p style={styles.todoDescription}>{task.description}</p>
+              </div>
+            ))
+          }
         </div>
       )}
-    </Authenticator>
+    </AuthenticatorContainer>
   )
 }
 
