@@ -1,5 +1,6 @@
 {
   "AppSyncApiName": "ticvi",
   "DynamoDBBillingMode": "PAY_PER_REQUEST",
-  "DynamoDBEnableServerSideEncryption": false
+  "DynamoDBEnableServerSideEncryption": false,
+  "AuthModeLastUpdated": "2023-05-05T01:23:21.027Z"
 }
