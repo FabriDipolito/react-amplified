@@ -11,15 +11,21 @@ backgroundColor: '#3AAAFE',
 
 export const LogoContainer = styled('div')(({ theme }) => ({
     display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginLeft: '30px',
+    marginRight: '20px',
+    cursor: 'pointer',
     height: '80px',
     }));
 
 export const LinkContainer = styled('div')(({ theme }) => ({
     display: 'flex',
     flexDirection: 'row',
-    justifyContent: 'space-between',
+    justifyContent: 'center',
+    gap: '10%',
     height: '80px',
-    width: '100px',
+    width: '100%',
     }));
 
 export const ButtonContainer = styled('div')(({ theme }) => ({

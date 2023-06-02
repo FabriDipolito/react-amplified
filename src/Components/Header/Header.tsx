@@ -1,25 +1,23 @@
 import Link from "next/link";
 import React from "react";
-import {
-  ButtonContainer,
-  ButtonSignOut,
-  HeaderContainer,
-  LinkContainer,
-  LogoContainer,
-} from "./styles";
+import Image from "next/image";
 
-const Header = (signOut) => {
+import { VaquitaMuLechePNG } from "../../../public/Assets/PNG";
+import { LinkContainer, LogoContainer } from "./styles";
+
+const Header = () => {
   return (
-    <HeaderContainer>
-      <LogoContainer></LogoContainer>
+    <>
+      <Link href="/">
+        <LogoContainer>
+          <Image src={VaquitaMuLechePNG} alt="" width={70} height={70} />
+        </LogoContainer>
+      </Link>
       <LinkContainer>
-        <Link href="/">Home</Link>
-        <Link href="/dashboard">Tablero</Link>
+        <Link href="/"><p style={{ fontFamily: 'Poppins-ExtraBold'}}>Home</p></Link>
+        <Link href="/dashboard"><p style={{ fontFamily: 'Poppins-ExtraBold'}}>Dashboard</p></Link>
       </LinkContainer>
-      <ButtonContainer>
-        <ButtonSignOut onClick={signOut}>Sign Out</ButtonSignOut>
-      </ButtonContainer>
-    </HeaderContainer>
+    </>
   );
 };
 
