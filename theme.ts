@@ -111,7 +111,7 @@ const theme = createTheme({
   customPalette: {
     
     // Palette of Colors
-    primary: '#1B1B1B',
+    primary: '#3AAAFE',
     secondary: '#5D5DF6',
     secondaryDark: '#3F3FFF',
     hover: '#8686FE',
