@@ -6,11 +6,16 @@ import {
   DashBoardContainer,
   DashBoardMainContainer,
   MainButton,
+  Table,
+  TBody,
+  TD,
   TextButton,
+  TH,
+  THead,
   Title,
   TitleContainer,
 } from "./styles";
-import { BEBEDERO, DASHBOARD, REGULADOR } from "../../Utils/string";
+import { BEBEDERO, DASHBOARD, NO_DATOS, REGULADOR } from "../../Utils/string";
 import getData from "../../API/getData";
 
 interface Measure {
@@ -35,6 +40,9 @@ interface MyData {
 const DashBoard = () => {
   const isMobile = useMediaQuery((theme: Theme) => theme.breakpoints.down(768));
 
+  const [regulatorCounter, setRegulatorCounter] = useState(0);
+  const [bebedorCounter, setBebedorCounter] = useState(0);
+
   const [data, setData] = useState<MyData>(null);
   const [selected, setSelected] = useState<Array<Measure>>(null);
 
@@ -54,6 +62,8 @@ const DashBoard = () => {
     }
   }, []);
 
+  const onClickRight = () => {};
+
   return (
     <DashBoardMainContainer>
       <TitleContainer>
@@ -64,32 +74,49 @@ const DashBoard = () => {
       </TitleContainer>
       <DashBoardContainer>
         <ButtonMainContainer>
-          <MainButton>
+          <MainButton
+            onClick={() =>
+              setSelected(data.measures.electrificadores[regulatorCounter])
+            }
+          >
             <TextButton>{REGULADOR}</TextButton>
           </MainButton>
-          <MainButton>
+          <MainButton
+            onClick={() => setSelected(data.measures.bebederos[bebedorCounter])}
+          >
             <TextButton>{BEBEDERO}</TextButton>
           </MainButton>
         </ButtonMainContainer>
-        <div>
-          <table>
-            <thead>
+        <div
+          style={{
+            width: "100%",
+            height: "100%",
+            overflowY: "scroll",
+          }}
+        >
+          <Table>
+            <THead>
               <tr>
-                <th>Medida</th>
-                <th>Fecha Y Hora</th>
+                <TH>Medida</TH>
+                <TH>Fecha Y Hora</TH>
               </tr>
-            </thead>
-            {selected && (
-              <tbody>
-                {selected.map((item, index) => (
+            </THead>
+            <TBody>
+              {selected ? (
+                selected.map((item, index) => (
                   <tr key={index}>
-                    <td>{item.value}</td>
-                    <td>{item.datetime}</td>
+                    <TD>{item.value}</TD>
+                    <TD>{item.datetime}</TD>
                   </tr>
-                ))}
-              </tbody>
-            )}
-          </table>
+                ))
+              ) : (
+                <tr>
+                  <TD>{NO_DATOS}</TD>
+                  <TD>{NO_DATOS}</TD>
+                </tr>
+              )}
+            </TBody>
+          </Table>
         </div>
       </DashBoardContainer>
     </DashBoardMainContainer>
