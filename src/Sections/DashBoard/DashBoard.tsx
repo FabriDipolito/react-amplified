@@ -5,7 +5,9 @@ import {
   ButtonMainContainer,
   DashBoardContainer,
   DashBoardMainContainer,
+  LeftButton,
   MainButton,
+  RightButton,
   Table,
   TBody,
   TD,
@@ -62,7 +64,31 @@ const DashBoard = () => {
     }
   }, []);
 
-  const onClickRight = () => {};
+  const onClickRight = (
+    actual: number,
+    setActual: React.Dispatch<React.SetStateAction<number>>,
+    lengthArray: number,
+    regulatorType: boolean,
+  ) => {
+    if (actual === lengthArray - 1) setActual(0);
+    else setActual((actual += 1));
+    if (regulatorType)
+      setSelected(data.measures.electrificadores[regulatorCounter]);
+    else setSelected(data.measures.bebederos[bebedorCounter]);
+  };
+
+  const onClickLeft = (
+    actual: number,
+    setActual: React.Dispatch<React.SetStateAction<number>>,
+    lengthArray: number,
+    regulatorType: boolean,
+  ) => {
+    if (actual === 0) setActual(lengthArray - 1);
+    else setActual((actual -= 1));
+    if (regulatorType)
+      setSelected(data.measures.electrificadores[regulatorCounter]);
+    else setSelected(data.measures.bebederos[bebedorCounter]);
+  };
 
   return (
     <DashBoardMainContainer>
@@ -75,11 +101,19 @@ const DashBoard = () => {
       <DashBoardContainer>
         <ButtonMainContainer>
           <MainButton
-            onClick={() =>
-              setSelected(data.measures.electrificadores[regulatorCounter])
-            }
+            // onClick={() =>
+            //   setSelected(data.measures.electrificadores[regulatorCounter])
+            //   onClickRight(
+            //     regulatorCounter,
+            //     setRegulatorCounter,
+            //     data.measures.electrificadores.length,
+            //     regulatorType,
+            //   )
+            // }
           >
+            <LeftButton></LeftButton>
             <TextButton>{REGULADOR}</TextButton>
+            <RightButton></RightButton>
           </MainButton>
           <MainButton
             onClick={() => setSelected(data.measures.bebederos[bebedorCounter])}

@@ -104,7 +104,7 @@ export const TD = styled("td")(({ theme }) => ({
   },
 }));
 
-export const MainButton = styled(Button)(({ theme }) => {
+export const MainButton = styled("div")(({ theme }) => {
   const {
     customSizes: {
       DashBoard: {
@@ -116,10 +116,39 @@ export const MainButton = styled(Button)(({ theme }) => {
   } = theme;
 
   return {
+    display: 'flex',
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    gap: '1px',
     width: "100%",
     height: "275px",
+  };
+});
+
+export const LeftButton = styled(Button)(({ theme }) => {
+  const {
+    customPalette: { primary },
+  } = theme;
+
+  return {
+    width: "20px",
+    height: "275px",
+    borderRadius: '16px 0 0 16px',
     backgroundColor: primary,
-    borderRadius: "16px",
+  };
+});
+
+export const RightButton = styled(Button)(({ theme }) => {
+  const {
+    customPalette: { primary },
+  } = theme;
+
+  return {
+    width: "20px",
+    height: "275px",
+    borderRadius: '0 16px 16px 0',
+    backgroundColor: primary,
   };
 });
 
