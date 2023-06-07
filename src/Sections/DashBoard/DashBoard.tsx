@@ -2,7 +2,9 @@ import React, { useState, useEffect } from "react";
 import { Theme, useMediaQuery } from "@mui/material";
 
 import {
+  ButtonContainer,
   ButtonMainContainer,
+  ButtonTemplate,
   DashBoardContainer,
   DashBoardMainContainer,
   LeftButton,
@@ -64,30 +66,44 @@ const DashBoard = () => {
     }
   }, []);
 
-  const onClickRight = (
-    actual: number,
-    setActual: React.Dispatch<React.SetStateAction<number>>,
-    lengthArray: number,
-    regulatorType: boolean,
-  ) => {
-    if (actual === lengthArray - 1) setActual(0);
-    else setActual((actual += 1));
-    if (regulatorType)
-      setSelected(data.measures.electrificadores[regulatorCounter]);
-    else setSelected(data.measures.bebederos[bebedorCounter]);
+  const onClickRightRegulator = () => {
+    let i = regulatorCounter;
+    if (regulatorCounter === data.measures.electrificadores.length - 1) {
+      setRegulatorCounter(0);
+      i = 0;
+    } else {
+      setRegulatorCounter(i + 1);
+      i++;
+    }
+    setSelected(data.measures.electrificadores[i]);
   };
 
-  const onClickLeft = (
-    actual: number,
-    setActual: React.Dispatch<React.SetStateAction<number>>,
-    lengthArray: number,
-    regulatorType: boolean,
-  ) => {
-    if (actual === 0) setActual(lengthArray - 1);
-    else setActual((actual -= 1));
-    if (regulatorType)
-      setSelected(data.measures.electrificadores[regulatorCounter]);
-    else setSelected(data.measures.bebederos[bebedorCounter]);
+  const onClickLeftRegulator = () => {
+    let i = regulatorCounter;
+    if (regulatorCounter === 0) {
+      setRegulatorCounter(data.measures.electrificadores.length - 1);
+      i = data.measures.electrificadores.length - 1;
+    } else {
+      setRegulatorCounter(i - 1);
+      i--;
+    }
+    setSelected(data.measures.electrificadores[i]);
+  };
+
+  const onClickRightBebedor = () => {
+    let i = bebedorCounter;
+    if (bebedorCounter === data.measures.bebederos.length - 1)
+      setBebedorCounter(0);
+    else setBebedorCounter((i += 1));
+    setSelected(data.measures.bebederos[bebedorCounter]);
+  };
+
+  const onClickLeftBebedor = () => {
+    let i = bebedorCounter;
+    if (bebedorCounter === 0)
+      setBebedorCounter(data.measures.bebederos.length - 1);
+    else setBebedorCounter((i -= 1));
+    setSelected(data.measures.bebederos[bebedorCounter]);
   };
 
   return (
@@ -97,28 +113,39 @@ const DashBoard = () => {
         <Title>
           {selected ? selected[0].name + " " + selected[0].number : ""}
         </Title>
+        <ButtonContainer>
+          <ButtonTemplate
+            onClick={() =>
+              setSelected(data.measures.electrificadores[regulatorCounter])
+            }
+          >
+            Electrificador
+          </ButtonTemplate>
+          <ButtonTemplate
+            onClick={() =>
+              setSelected(data.measures.baterias[regulatorCounter])
+            }
+          >
+            Bateria
+          </ButtonTemplate>
+          <ButtonTemplate
+            onClick={() => setSelected(data.measures.paneles[regulatorCounter])}
+          >
+            Panel
+          </ButtonTemplate>
+        </ButtonContainer>
       </TitleContainer>
       <DashBoardContainer>
         <ButtonMainContainer>
-          <MainButton
-            // onClick={() =>
-            //   setSelected(data.measures.electrificadores[regulatorCounter])
-            //   onClickRight(
-            //     regulatorCounter,
-            //     setRegulatorCounter,
-            //     data.measures.electrificadores.length,
-            //     regulatorType,
-            //   )
-            // }
-          >
-            <LeftButton></LeftButton>
+          <MainButton>
+            <LeftButton onClick={() => onClickLeftRegulator()}></LeftButton>
             <TextButton>{REGULADOR}</TextButton>
-            <RightButton></RightButton>
+            <RightButton onClick={() => onClickRightRegulator()}></RightButton>
           </MainButton>
-          <MainButton
-            onClick={() => setSelected(data.measures.bebederos[bebedorCounter])}
-          >
+          <MainButton>
+            <LeftButton onClick={() => onClickLeftBebedor()}></LeftButton>
             <TextButton>{BEBEDERO}</TextButton>
+            <RightButton onClick={() => onClickRightBebedor()}></RightButton>
           </MainButton>
         </ButtonMainContainer>
         <div

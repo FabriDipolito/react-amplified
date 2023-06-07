@@ -16,8 +16,31 @@ export const DashBoardMainContainer = styled("div")(({ theme }) => ({
 export const TitleContainer = styled("div")(({ theme }) => ({
   display: "flex",
   flexDirection: "row",
-  width: "fit-content",
+  width: "100%",
   gap: "15px",
+  [theme.breakpoints.down(768)]: {
+    // padding: '0 70px 140px 70px',
+  },
+}));
+
+export const ButtonContainer = styled("div")(({ theme }) => ({
+  display: "flex",
+  flexDirection: "row",
+  alignSelf: "flex-end",
+  width: "fit-content",
+  gap: '10px',
+  justifyContent: "flex-end",
+  [theme.breakpoints.down(768)]: {
+    // padding: '0 70px 140px 70px',
+  },
+}));
+
+export const ButtonTemplate = styled(Button)(({ theme }) => ({
+  width: "fit-content",
+  height: "fit-content",
+  borderRadius: "16px",
+  border: "2px solid blue",
+  backgroundColor: theme.customPalette.primary,
   [theme.breakpoints.down(768)]: {
     // padding: '0 70px 140px 70px',
   },
@@ -200,6 +223,7 @@ export const Title = styled(Typography)(({ theme }) => {
     fontSize: titleDesktop.fontSize,
     fontWeight: titleDesktop.fontWeight,
     lineHeight: titleDesktop.lineHeight,
+    width: "fit-content",
     color: text,
   };
 });

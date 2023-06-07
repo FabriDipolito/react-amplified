@@ -15,7 +15,6 @@ const Header = () => {
       </Link>
       <LinkContainer>
         <Link href="/"><p style={{ fontFamily: 'Poppins-ExtraBold'}}>Home</p></Link>
-        <Link href="/dashboard"><p style={{ fontFamily: 'Poppins-ExtraBold'}}>Dashboard</p></Link>
       </LinkContainer>
     </>
   );
