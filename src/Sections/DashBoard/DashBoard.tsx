@@ -50,21 +50,46 @@ const DashBoard = () => {
   const [data, setData] = useState<MyData>(null);
   const [selected, setSelected] = useState<Array<Measure>>(null);
 
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const json: any = await getData();
-        setData(json.body);
-      } catch (error) {
-        console.error("Error fetching JSON from Lambda:", error);
-      }
-    };
+  const fetchData = async () => {
+    try {
+      const json: any = await getData();
+      setData(json.body);
+    } catch (error) {
+      console.error("Error fetching JSON from Lambda:", error);
+    }
+  };
 
+  useEffect(() => {
     fetchData();
     if (data && !selected) {
       setSelected(data.measures.electrificadores[0]);
     }
   }, []);
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      fetchData(); // Vuelve a ejecutar la consulta cada 1 segundo
+    }, 1000);
+
+    if(selected){
+      if(selected[0].name === "Electrificador"){
+        setSelected(data.measures.electrificadores[regulatorCounter])
+      };
+      if(selected[0].name === "Bateria"){
+        setSelected(data.measures.baterias[regulatorCounter])
+      };
+      if(selected[0].name === "Panel"){
+        setSelected(data.measures.paneles[regulatorCounter])
+      };
+      if(selected[0].name === "Bebedor"){
+        setSelected(data.measures.bebederos[bebedorCounter])
+      };
+    };
+
+    return () => {
+      clearInterval(interval); // Limpiar el intervalo al desmontar el componente
+    };
+  }, [data, selected]);
 
   const onClickRightRegulator = () => {
     let i = regulatorCounter;
@@ -164,12 +189,14 @@ const DashBoard = () => {
             </THead>
             <TBody>
               {selected ? (
-                selected.map((item, index) => (
-                  <tr key={index}>
-                    <TD>{item.value}</TD>
-                    <TD>{item.datetime}</TD>
-                  </tr>
-                ))
+                selected
+                  .sort((a, b) => b.datetime.localeCompare(a.datetime))
+                  .map((item, index) => (
+                    <tr key={index}>
+                      <TD>{item.value}</TD>
+                      <TD>{item.datetime}</TD>
+                    </tr>
+                  ))
               ) : (
                 <tr>
                   <TD>{NO_DATOS}</TD>
